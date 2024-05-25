@@ -1,8 +1,7 @@
 APP_NAME=mrtasker
 
 build:
-	go build -o ./tmp/bin/${APP_NAME} main.go
-
+	./scripts/build.sh ${APP_NAME}
 run: build
 	./tmp/bin/${APP_NAME}
 
