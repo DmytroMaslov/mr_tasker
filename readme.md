@@ -10,7 +10,7 @@ struct according [to](https://github.com/golang-standards/project-layout/blob/ma
 - [x] init git repo
 - [x] add makefile for building, runing, testing
 - [x] add simple webserver witch return /Get localhost:8080/status 200ok "Hello from mr. Tasker" (use http.ServerMux)
-- [ ] add graceful shutdown
+- [x] add graceful shutdown
 - [ ] add logger
 Task1:
 - [ ] read <https://www.alexedwards.net/blog/which-go-router-should-i-use>
@@ -19,3 +19,4 @@ Task1:
 Additional:
 
 - [ ] add more static analysis checks
+- [ ] add more sophisticated graceful shutdown ([link](https://habr.com/ru/articles/771626/))
