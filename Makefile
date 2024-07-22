@@ -1,9 +1,17 @@
-APP_NAME=mrtasker
+APP_MRTASKER=mrtasker
+APP_IMAGE_REVERTER=image-reverter
 
-build:
-	./scripts/build.sh ${APP_NAME}
-run: build
-	./tmp/bin/${APP_NAME}
+build-mrtasker:
+	./scripts/build.sh ${APP_MRTASKER}
+	./scripts/build.sh ${APP_IMAGE_REVERTER}
+run-mrtasker: build-mrtasker
+	./tmp/bin/${APP_MRTASKER}
+
+build-image-reverter:
+	./scripts/build.sh ${APP_IMAGE_REVERTER}
+
+run-image-reverter: build-image-reverter
+	./tmp/bin/${APP_IMAGE_REVERTER}
 
 clean:
 	rm -r ./tmp
