@@ -5,6 +5,7 @@
 *.so
 *.dylib
 launch.json
+/infra/dynamodb/.terraform
 
 # Secret envs
 .secret
