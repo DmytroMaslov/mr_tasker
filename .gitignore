@@ -23,4 +23,10 @@ go.work.sum
 
 # all files in temporary dir
 /tmp
-/infra/dynamodb/.terraform
+
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
