@@ -6,6 +6,9 @@
 *.dylib
 launch.json
 
+# Secret envs
+.secret
+
 # Test binary, built with `go test -c`
 *.test
 

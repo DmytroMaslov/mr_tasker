@@ -1,6 +1,11 @@
 APP_MRTASKER=mrtasker
 APP_IMAGE_REVERTER=image-reverter
 
+ifneq (,$(wildcard ./.secret))
+    include .secret
+    export
+endif
+
 build-mrtasker:
 	./scripts/build.sh ${APP_MRTASKER}
 	./scripts/build.sh ${APP_IMAGE_REVERTER}
@@ -28,3 +33,17 @@ dep:
 
 staticcheck:
 	staticcheck
+
+dynamodb-create:
+	terraform -chdir=infra/dynamodb apply -auto-approve
+
+dynamodb-destroy:
+	terraform -chdir=infra/dynamodb destroy -auto-approve
+
+genetareMock:
+	go generate -v -run="mockgen" ./...
+
+# terraform -chdir=infra/dynamodb init
+# terraform -chdir=infra/dynamodb plan
+# terraform -chdir=infra/dynamodb apply
+# terraform -chdir=infra/dynamodb destroy

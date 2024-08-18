@@ -5,16 +5,30 @@ import (
 	"fmt"
 	"log"
 	"mr-tasker/api/native"
+	"mr-tasker/api/native/handlers"
+	"mr-tasker/configs"
+	"mr-tasker/internal/services/user"
+	"mr-tasker/internal/storage/dynamodb"
 	"os"
 	"os/signal"
 	"syscall"
 )
 
-func Run() {
+func Run(cfg *configs.Config) {
 	log.Printf("Hello\n")
-	server := native.NewHttpServer(80)
+	ctx := context.Background()
 
-	err := server.Serve()
+	dynamodbStorage, err := dynamodb.NewUserStorage(ctx, cfg.Aws)
+	if err != nil {
+		log.Fatalf(fmt.Sprintf("failed to create user storage, err: %s", err))
+	}
+	userService := user.NewUserService(dynamodbStorage)
+
+	cloudHandlers := handlers.NewCloudCrudHandler(userService)
+
+	server := native.NewHttpServer(8080, cloudHandlers.GetHandlers())
+
+	err = server.Serve()
 	if err != nil {
 		log.Fatalf(fmt.Sprintf("failed to serve, err: %s", err))
 	}

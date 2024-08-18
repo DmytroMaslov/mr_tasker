@@ -3,38 +3,30 @@ package native
 import (
 	"context"
 	"fmt"
-	"mr-tasker/api/native/handlers"
 	"net/http"
 	"strconv"
 )
 
 type Server struct {
-	port    int
-	mux     *http.ServeMux
-	server  *http.Server
-	handler *handlers.Handler
+	port   int
+	routes http.Handler
+	server *http.Server
 }
 
-func NewHttpServer(port int) *Server {
+func NewHttpServer(port int, routes http.Handler) *Server {
 	return &Server{
-		mux:     http.NewServeMux(),
-		port:    port,
-		handler: &handlers.Handler{},
+		routes: routes,
+		port:   port,
 	}
 
 }
 
-func (s *Server) addHandler(p string, h http.Handler) {
-	s.mux.Handle(p, h)
-}
-
 func (s *Server) Serve() error {
-	// set up routing
-	s.addHandler("/status", http.HandlerFunc(s.handler.StatusHandler()))
-
 	// start server
 	p := strconv.Itoa(s.port)
-	s.server = &http.Server{Addr: fmt.Sprintf(":%s", p), Handler: s.mux}
+	s.server = &http.Server{
+		Addr:    fmt.Sprintf(":%s", p),
+		Handler: s.routes}
 
 	err := s.server.ListenAndServe()
 	if err != nil {
