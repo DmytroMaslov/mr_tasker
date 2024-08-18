@@ -5,8 +5,6 @@
 *.so
 *.dylib
 launch.json
-/infra/dynamodb/.terraform
-
 # Secret envs
 .secret
 
@@ -25,3 +23,4 @@ go.work.sum
 
 # all files in temporary dir
 /tmp
+/infra/dynamodb/.terraform
